@@ -5,11 +5,12 @@ import Plot from "react-plotly.js"
 import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
-import DatePicker from "./DatePicker"
+import CustomDateTimePicker from "./CustomDateTimePicker"
 
 function App() {
     const [res, setRes] = useState(null)
     const [selectedDate, setSelectedDate] = useState(null)
+    const [dateTime, setDateTime] = useState(null)
 
     let X
     let Y
@@ -39,6 +40,7 @@ function App() {
         Y = feedsFiltered.map((value, index) => {return value["field1"]})
     }
 
+    console.log(dateTime)
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -58,7 +60,7 @@ function App() {
                             ]}
                             layout={ {width: 1200, height: 450, title: 'A Fancy Plot'} }
                         />
-                        <DatePicker />
+                        <CustomDateTimePicker dateTime={dateTime} setDateTime={setDateTime} />
                     </div>
                 }
             </div>
