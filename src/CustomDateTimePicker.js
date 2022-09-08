@@ -5,7 +5,7 @@ import { DateTimePicker } from "@mui/x-date-pickers"
 
 function CustomDateTimePicker(props) {
     return (
-        <Stack spacing={2} sx={{width: "250px"}}>
+        <Stack className="dtp" spacing={4} sx={{width: "250px"}}>
             <DateTimePicker
                 label="Date Time Picker"
                 renderInput={(params) => <TextField {...params}/>}
