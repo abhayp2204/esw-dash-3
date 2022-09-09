@@ -1,6 +1,5 @@
 import "./App.css";
-import axios from "axios"
-import React, { useState } from "react"
+import React from "react"
 import Plot from "react-plotly.js"
 import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars"
 import { LocalizationProvider } from "@mui/x-date-pickers"
