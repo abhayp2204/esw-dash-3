@@ -11,7 +11,7 @@ import Navbar from "./Navbar";
 import About from "./About";
 
 // Routes
-import { BrowserRouter as Router, Routes, Route, Outlet } from "react-router-dom"
+import { HashRouter as Router, Routes, Route, Outlet } from "react-router-dom"
 
 const Layout = (props) => {
     return (
