@@ -1,25 +1,28 @@
 import React, { useState } from "react"
 import axios from "axios"
 import Plot from "react-plotly.js"
-import { DateTimePickerComponent } from "@syncfusion/ej2-react-calendars"
 import { LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import CustomDateTimePicker from "./CustomDateTimePicker"
 import "./Device.css"
-import { parseWithOptions } from "date-fns/fp"
+import Records from "./feeds.json"
 
 function Device(props) {
     const [res, setRes] = useState(null)
-    const [time1, setTime1] = useState(null)
+    const [time1, setTime1] = useState(null)    
     const [time2, setTime2] = useState(null)
 
     let X
     let Y
 
+    console.log(Records)
+
     async function getData() {
         try {
             // get data fron thingspeak asynchronously
-            const response = await axios.get(`https://api.thingspeak.com/channels/1848149/fields/${props.field}.json`)
+            // const url = `https://api.thingspeak.com/channels/1848149/fields/${props.field}.json`
+            const url2 = `https://api.thingspeak.com/channels/1848149/feeds.json`
+            const response = await axios.get(url2)
             return response
         } catch (error) {
             console.log(error)
@@ -27,12 +30,18 @@ function Device(props) {
     }
 
     function filterFeeds(feeds) {
-        const feedsFiltered = time1? feeds.filter(feed => {
+        const feedsFiltered = time1 || time2? feeds.filter(feed => {
             const time = feed["created_at"]
             const leftBound = time1? time > timeFormatter(time1) : true
             const rightBound = time2? time < timeFormatter(time2) : true
             return leftBound && rightBound
         }) : feeds
+        const feedsCleaned = feedsFiltered.filter(feed => {
+            const val = feed[`field${props.field}`]
+            const lowerLimit = 20
+            const upperLimit = 21
+            return lowerLimit <= val && val <= upperLimit
+        })
         return feedsFiltered
     }
 
@@ -73,7 +82,8 @@ function Device(props) {
     }
     else {
         const feedsRaw = res.data.feeds
-        const feeds = filterFeeds(feedsRaw)
+        const feedsFull = Records
+        const feeds = filterFeeds(Records)
         // const feeds = feedsRaw
         console.log(feeds)
 
